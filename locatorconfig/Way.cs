@@ -21,6 +21,7 @@ namespace locatorconfig
         public RailCircuity[] sensors { get; set; }
         public Way()
         {
+            var i = 0;
             wayCircuitConfigPoints = new double[AppConstants.NUM_OF_POINTS];
             for (int i = 0; i < AppConstants.NUM_OF_POINTS; i++)
             {
