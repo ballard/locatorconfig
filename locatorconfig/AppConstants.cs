@@ -21,5 +21,9 @@ namespace locatorconfig
         public const int NUM_OF_SENSORS = 3;
         public const int NUM_OF_POINTS = 4;
         public const int MAX_WAYS = 4;
+
+        public const int MAJOR_VERSION = 2;
+        public const int MINOR_VERSION = 1;
+
     }
 }

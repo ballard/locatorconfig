@@ -85,5 +85,50 @@ namespace locatorconfig
                 }
             }
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveToFile();
+        }
+
+        private async void saveToFile() {
+
+            var fileString = new StringBuilder();
+            fileString.AppendFormat("m_version_cfg = {0} {1}", AppConstants.MAJOR_VERSION, AppConstants.MINOR_VERSION);
+            fileString.AppendLine();
+            fileString.AppendFormat("m_num_ways = {0}", tabsNum);
+            fileString.AppendLine();
+
+            if (0 < tabsNum)
+            {
+                for (var i = 0; i < tabsNum; i++) {
+                    fileString.AppendFormat("m_way_{0} = {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}",
+                        i,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16);
+                    fileString.AppendLine();
+                }                
+            }
+
+            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);            
+            using (var outputFile = new StreamWriter(mydocpath + @"\WriteTextAsync.txt"))
+            {
+                await outputFile.WriteAsync(fileString.ToString());                
+            }
+        }
     }
 }
