@@ -12,19 +12,13 @@ namespace locatorconfig
 {
     public partial class RadioRailCircuitUserControl : UserControl
     {
-        public event EventHandler ContentChanged;
         public RadioRailCircuitUserControl()
         {
             InitializeComponent();
         }
-        public int getFrequency()
+        public double getFrequency()
         {
-            return Convert.ToInt32((this.editFrequency.Text == "") ? "0" : this.editFrequency.Text);
-        }
-        private void editFrequency_TextChanged(object sender, EventArgs e)
-        {
-            if (ContentChanged != null)
-                ContentChanged(this, new EventArgs());
+            return Convert.ToDouble((this.editFrequency.Text == "") ? "0" : this.editFrequency.Text);
         }
     }
 }

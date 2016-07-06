@@ -46,24 +46,32 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.cbxDirection = new System.Windows.Forms.ComboBox();
-            this.tbxDelayLR = new System.Windows.Forms.TextBox();
-            this.tbxDelayRL = new System.Windows.Forms.TextBox();
-            this.tbxMaxSpeedLR = new System.Windows.Forms.TextBox();
-            this.tbxMaxSpeedRL = new System.Windows.Forms.TextBox();
-            this.tbxTimeCounterWrongL = new System.Windows.Forms.TextBox();
-            this.tbxTimeCounterWrongR = new System.Windows.Forms.TextBox();
-            this.tbxTimeNotificationTrainNotExitRL = new System.Windows.Forms.TextBox();
-            this.tbxTimeNotificationTrainNotExitLR = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.wayConfigImagePanel = new System.Windows.Forms.Panel();
             this.lblPointA = new System.Windows.Forms.Label();
             this.lblPointB = new System.Windows.Forms.Label();
             this.lblPointC = new System.Windows.Forms.Label();
             this.lblPointD = new System.Windows.Forms.Label();
-            this.wayConfigImagePanel = new System.Windows.Forms.Panel();
+            this.tbxDelayLR = new System.Windows.Forms.NumericUpDown();
+            this.tbxDelayRL = new System.Windows.Forms.NumericUpDown();
+            this.tbxMaxSpeedLR = new System.Windows.Forms.NumericUpDown();
+            this.tbxMaxSpeedRL = new System.Windows.Forms.NumericUpDown();
+            this.tbxTimeCounterWrongL = new System.Windows.Forms.NumericUpDown();
+            this.tbxTimeCounterWrongR = new System.Windows.Forms.NumericUpDown();
+            this.tbxTimeNotificationTrainNotExitRL = new System.Windows.Forms.NumericUpDown();
+            this.tbxTimeNotificationTrainNotExitLR = new System.Windows.Forms.NumericUpDown();
             this.mainTable.SuspendLayout();
             this.WayParametersPanel.SuspendLayout();
             this.tblWayParameters.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxDelayLR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxDelayRL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxMaxSpeedLR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxMaxSpeedRL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeCounterWrongL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeCounterWrongR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeNotificationTrainNotExitRL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeNotificationTrainNotExitLR)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTable
@@ -317,6 +325,7 @@
             // cbxDirection
             // 
             this.cbxDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxDirection.FormattingEnabled = true;
             this.cbxDirection.Items.AddRange(new object[] {
             "->",
@@ -325,87 +334,6 @@
             this.cbxDirection.Name = "cbxDirection";
             this.cbxDirection.Size = new System.Drawing.Size(119, 21);
             this.cbxDirection.TabIndex = 12;
-            this.cbxDirection.TextChanged += new System.EventHandler(this.cbxDirection_TextChanged);
-            // 
-            // tbxDelayLR
-            // 
-            this.tbxDelayLR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxDelayLR.Location = new System.Drawing.Point(710, 63);
-            this.tbxDelayLR.Name = "tbxDelayLR";
-            this.tbxDelayLR.Size = new System.Drawing.Size(119, 20);
-            this.tbxDelayLR.TabIndex = 13;
-            this.tbxDelayLR.Text = "0";
-            this.tbxDelayLR.TextChanged += new System.EventHandler(this.tbxDelayLR_TextChanged);
-            // 
-            // tbxDelayRL
-            // 
-            this.tbxDelayRL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxDelayRL.Location = new System.Drawing.Point(710, 92);
-            this.tbxDelayRL.Name = "tbxDelayRL";
-            this.tbxDelayRL.Size = new System.Drawing.Size(119, 20);
-            this.tbxDelayRL.TabIndex = 14;
-            this.tbxDelayRL.Text = "0";
-            this.tbxDelayRL.TextChanged += new System.EventHandler(this.tbxDelayRL_TextChanged);
-            // 
-            // tbxMaxSpeedLR
-            // 
-            this.tbxMaxSpeedLR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxMaxSpeedLR.Location = new System.Drawing.Point(710, 121);
-            this.tbxMaxSpeedLR.Name = "tbxMaxSpeedLR";
-            this.tbxMaxSpeedLR.Size = new System.Drawing.Size(119, 20);
-            this.tbxMaxSpeedLR.TabIndex = 15;
-            this.tbxMaxSpeedLR.Text = "0";
-            this.tbxMaxSpeedLR.TextChanged += new System.EventHandler(this.tbxMaxSpeedLR_TextChanged);
-            // 
-            // tbxMaxSpeedRL
-            // 
-            this.tbxMaxSpeedRL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxMaxSpeedRL.Location = new System.Drawing.Point(710, 150);
-            this.tbxMaxSpeedRL.Name = "tbxMaxSpeedRL";
-            this.tbxMaxSpeedRL.Size = new System.Drawing.Size(119, 20);
-            this.tbxMaxSpeedRL.TabIndex = 16;
-            this.tbxMaxSpeedRL.Text = "0";
-            this.tbxMaxSpeedRL.TextChanged += new System.EventHandler(this.tbxMaxSpeedRL_TextChanged);
-            // 
-            // tbxTimeCounterWrongL
-            // 
-            this.tbxTimeCounterWrongL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxTimeCounterWrongL.Location = new System.Drawing.Point(710, 179);
-            this.tbxTimeCounterWrongL.Name = "tbxTimeCounterWrongL";
-            this.tbxTimeCounterWrongL.Size = new System.Drawing.Size(119, 20);
-            this.tbxTimeCounterWrongL.TabIndex = 17;
-            this.tbxTimeCounterWrongL.Text = "0";
-            this.tbxTimeCounterWrongL.TextChanged += new System.EventHandler(this.tbxTimeCounterWrongL_TextChanged);
-            // 
-            // tbxTimeCounterWrongR
-            // 
-            this.tbxTimeCounterWrongR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxTimeCounterWrongR.Location = new System.Drawing.Point(710, 208);
-            this.tbxTimeCounterWrongR.Name = "tbxTimeCounterWrongR";
-            this.tbxTimeCounterWrongR.Size = new System.Drawing.Size(119, 20);
-            this.tbxTimeCounterWrongR.TabIndex = 18;
-            this.tbxTimeCounterWrongR.Text = "0";
-            this.tbxTimeCounterWrongR.TextChanged += new System.EventHandler(this.tbxTimeCounterWrongR_TextChanged);
-            // 
-            // tbxTimeNotificationTrainNotExitRL
-            // 
-            this.tbxTimeNotificationTrainNotExitRL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxTimeNotificationTrainNotExitRL.Location = new System.Drawing.Point(710, 237);
-            this.tbxTimeNotificationTrainNotExitRL.Name = "tbxTimeNotificationTrainNotExitRL";
-            this.tbxTimeNotificationTrainNotExitRL.Size = new System.Drawing.Size(119, 20);
-            this.tbxTimeNotificationTrainNotExitRL.TabIndex = 19;
-            this.tbxTimeNotificationTrainNotExitRL.Text = "0";
-            this.tbxTimeNotificationTrainNotExitRL.TextChanged += new System.EventHandler(this.tbxTimeNotificationTrainNotExitRL_TextChanged);
-            // 
-            // tbxTimeNotificationTrainNotExitLR
-            // 
-            this.tbxTimeNotificationTrainNotExitLR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbxTimeNotificationTrainNotExitLR.Location = new System.Drawing.Point(710, 266);
-            this.tbxTimeNotificationTrainNotExitLR.Name = "tbxTimeNotificationTrainNotExitLR";
-            this.tbxTimeNotificationTrainNotExitLR.Size = new System.Drawing.Size(119, 20);
-            this.tbxTimeNotificationTrainNotExitLR.TabIndex = 20;
-            this.tbxTimeNotificationTrainNotExitLR.Text = "0";
-            this.tbxTimeNotificationTrainNotExitLR.TextChanged += new System.EventHandler(this.tbxTimeNotificationTrainNotExitLR_TextChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -427,6 +355,15 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(416, 305);
             this.tableLayoutPanel1.TabIndex = 6;
+            // 
+            // wayConfigImagePanel
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.wayConfigImagePanel, 4);
+            this.wayConfigImagePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wayConfigImagePanel.Location = new System.Drawing.Point(3, 38);
+            this.wayConfigImagePanel.Name = "wayConfigImagePanel";
+            this.wayConfigImagePanel.Size = new System.Drawing.Size(410, 264);
+            this.wayConfigImagePanel.TabIndex = 0;
             // 
             // lblPointA
             // 
@@ -472,14 +409,77 @@
             this.lblPointD.Text = "Г:";
             this.lblPointD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // wayConfigImagePanel
+            // tbxDelayLR
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.wayConfigImagePanel, 4);
-            this.wayConfigImagePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wayConfigImagePanel.Location = new System.Drawing.Point(3, 38);
-            this.wayConfigImagePanel.Name = "wayConfigImagePanel";
-            this.wayConfigImagePanel.Size = new System.Drawing.Size(410, 264);
-            this.wayConfigImagePanel.TabIndex = 0;
+            this.tbxDelayLR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxDelayLR.DecimalPlaces = 2;
+            this.tbxDelayLR.Location = new System.Drawing.Point(710, 63);
+            this.tbxDelayLR.Name = "tbxDelayLR";
+            this.tbxDelayLR.Size = new System.Drawing.Size(119, 20);
+            this.tbxDelayLR.TabIndex = 21;
+            // 
+            // tbxDelayRL
+            // 
+            this.tbxDelayRL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxDelayRL.DecimalPlaces = 2;
+            this.tbxDelayRL.Location = new System.Drawing.Point(710, 92);
+            this.tbxDelayRL.Name = "tbxDelayRL";
+            this.tbxDelayRL.Size = new System.Drawing.Size(119, 20);
+            this.tbxDelayRL.TabIndex = 22;
+            // 
+            // tbxMaxSpeedLR
+            // 
+            this.tbxMaxSpeedLR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxMaxSpeedLR.DecimalPlaces = 2;
+            this.tbxMaxSpeedLR.Location = new System.Drawing.Point(710, 121);
+            this.tbxMaxSpeedLR.Name = "tbxMaxSpeedLR";
+            this.tbxMaxSpeedLR.Size = new System.Drawing.Size(119, 20);
+            this.tbxMaxSpeedLR.TabIndex = 23;
+            // 
+            // tbxMaxSpeedRL
+            // 
+            this.tbxMaxSpeedRL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxMaxSpeedRL.DecimalPlaces = 2;
+            this.tbxMaxSpeedRL.Location = new System.Drawing.Point(710, 150);
+            this.tbxMaxSpeedRL.Name = "tbxMaxSpeedRL";
+            this.tbxMaxSpeedRL.Size = new System.Drawing.Size(119, 20);
+            this.tbxMaxSpeedRL.TabIndex = 24;
+            // 
+            // tbxTimeCounterWrongL
+            // 
+            this.tbxTimeCounterWrongL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxTimeCounterWrongL.DecimalPlaces = 2;
+            this.tbxTimeCounterWrongL.Location = new System.Drawing.Point(710, 179);
+            this.tbxTimeCounterWrongL.Name = "tbxTimeCounterWrongL";
+            this.tbxTimeCounterWrongL.Size = new System.Drawing.Size(119, 20);
+            this.tbxTimeCounterWrongL.TabIndex = 25;
+            // 
+            // tbxTimeCounterWrongR
+            // 
+            this.tbxTimeCounterWrongR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxTimeCounterWrongR.DecimalPlaces = 2;
+            this.tbxTimeCounterWrongR.Location = new System.Drawing.Point(710, 208);
+            this.tbxTimeCounterWrongR.Name = "tbxTimeCounterWrongR";
+            this.tbxTimeCounterWrongR.Size = new System.Drawing.Size(119, 20);
+            this.tbxTimeCounterWrongR.TabIndex = 26;
+            // 
+            // tbxTimeNotificationTrainNotExitRL
+            // 
+            this.tbxTimeNotificationTrainNotExitRL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxTimeNotificationTrainNotExitRL.DecimalPlaces = 2;
+            this.tbxTimeNotificationTrainNotExitRL.Location = new System.Drawing.Point(710, 237);
+            this.tbxTimeNotificationTrainNotExitRL.Name = "tbxTimeNotificationTrainNotExitRL";
+            this.tbxTimeNotificationTrainNotExitRL.Size = new System.Drawing.Size(119, 20);
+            this.tbxTimeNotificationTrainNotExitRL.TabIndex = 27;
+            // 
+            // tbxTimeNotificationTrainNotExitLR
+            // 
+            this.tbxTimeNotificationTrainNotExitLR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxTimeNotificationTrainNotExitLR.DecimalPlaces = 2;
+            this.tbxTimeNotificationTrainNotExitLR.Location = new System.Drawing.Point(710, 266);
+            this.tbxTimeNotificationTrainNotExitLR.Name = "tbxTimeNotificationTrainNotExitLR";
+            this.tbxTimeNotificationTrainNotExitLR.Size = new System.Drawing.Size(119, 20);
+            this.tbxTimeNotificationTrainNotExitLR.TabIndex = 28;
             // 
             // WayUserСontrol
             // 
@@ -495,6 +495,14 @@
             this.tblWayParameters.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxDelayLR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxDelayRL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxMaxSpeedLR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxMaxSpeedRL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeCounterWrongL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeCounterWrongR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeNotificationTrainNotExitRL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbxTimeNotificationTrainNotExitLR)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -519,19 +527,19 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel WayParametersPanel;
         private System.Windows.Forms.ComboBox cbxDirection;
-        private System.Windows.Forms.TextBox tbxDelayLR;
-        private System.Windows.Forms.TextBox tbxDelayRL;
-        private System.Windows.Forms.TextBox tbxMaxSpeedLR;
-        private System.Windows.Forms.TextBox tbxMaxSpeedRL;
-        private System.Windows.Forms.TextBox tbxTimeCounterWrongL;
-        private System.Windows.Forms.TextBox tbxTimeCounterWrongR;
-        private System.Windows.Forms.TextBox tbxTimeNotificationTrainNotExitRL;
-        private System.Windows.Forms.TextBox tbxTimeNotificationTrainNotExitLR;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel wayConfigImagePanel;
         private System.Windows.Forms.Label lblPointA;
         private System.Windows.Forms.Label lblPointB;
         private System.Windows.Forms.Label lblPointC;
         private System.Windows.Forms.Label lblPointD;
+        private System.Windows.Forms.NumericUpDown tbxDelayLR;
+        private System.Windows.Forms.NumericUpDown tbxDelayRL;
+        private System.Windows.Forms.NumericUpDown tbxMaxSpeedLR;
+        private System.Windows.Forms.NumericUpDown tbxMaxSpeedRL;
+        private System.Windows.Forms.NumericUpDown tbxTimeCounterWrongL;
+        private System.Windows.Forms.NumericUpDown tbxTimeCounterWrongR;
+        private System.Windows.Forms.NumericUpDown tbxTimeNotificationTrainNotExitRL;
+        private System.Windows.Forms.NumericUpDown tbxTimeNotificationTrainNotExitLR;
     }
 }

@@ -13,10 +13,7 @@ namespace locatorconfig
     public partial class WayUserСontrol : UserControl
     {
         public Way RailWay { get; set; }
-        protected void OnContentChanged(object sender, EventArgs e)
-        {
-            updateModel();
-        }
+
         public WayUserСontrol()
         {
             InitializeComponent();
@@ -29,13 +26,58 @@ namespace locatorconfig
                 var tp = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, i + 1));
                 tp.Controls.Add(uc);
                 this.tabRailChain.TabPages.Add(tp);
-                uc.ContentChanged += new EventHandler(OnContentChanged);
             }
             this.updateCircuitConfigPoints();
             this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlayFirst;
             this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+            initialSetupControls(this);
         }
-        
+
+        private void initialSetupControls(Control control)
+        {
+            if (control is NumericUpDown)
+            {
+                control.Controls.RemoveAt(0);
+                control.TextChanged += new EventHandler(controlOnTextChanged);
+            } else if (control is TextBox) {
+                control.TextChanged += new EventHandler(controlOnTextChanged);
+            } else if (control is ComboBox) {
+                control.TextChanged += new EventHandler(controlOnTextChanged);
+            }
+
+            if (control.HasChildren)
+            {
+                foreach (Control childControl in control.Controls)
+                {
+                    initialSetupControls(childControl);
+                }
+            }
+            //else {
+            //    System.Console.WriteLine("control type is: " + control.GetType().ToString());
+            //    switch (control.GetType().ToString())
+            //    {
+            //        case "System.Windows.Forms.TextBox":
+            //            control.TextChanged += new EventHandler(controlOnTextChanged);
+            //            break;
+            //        case "System.Windows.Forms.ComboBox":
+            //            control.TextChanged += new EventHandler(controlOnTextChanged);
+            //            break;
+            //        case "System.Windows.Forms.NumericUpDown":
+            //            control.TextChanged += new EventHandler(controlOnTextChanged);
+            //            break;
+
+            //        default:
+            //            break;
+            //    }
+            //}
+        }
+
+        private void controlOnTextChanged(object sender, System.EventArgs e)
+        {
+            if (this.IsHandleCreated)
+                updateModel();
+        }
+
         private void updateCircuitConfigPoints()
         {
             if (RailWay.wayCircuitConfigPoints.Count() >= 4)
@@ -60,8 +102,8 @@ namespace locatorconfig
                     {
                         this.tabRailChain.TabPages.Remove(this.tabRailChain.SelectedTab);
                         var ucRadio = new RadioRailCircuitUserControl();
+                        initialSetupControls(ucRadio);
                         ucRadio.Dock = DockStyle.Fill;
-                        ucRadio.ContentChanged += new EventHandler(OnContentChanged);
                         var tpRadio = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, currentTabIndex + 1));
                         tpRadio.Controls.Add(ucRadio);
                         this.tabRailChain.TabPages.Insert(currentTabIndex, tpRadio);
@@ -77,7 +119,7 @@ namespace locatorconfig
                     {
                         this.tabRailChain.TabPages.Remove(this.tabRailChain.SelectedTab);
                         var ucDigital = new DigitalRailCircuitUserControl();
-                        ucDigital.ContentChanged += new EventHandler(OnContentChanged);
+                        initialSetupControls(ucDigital);
                         ucDigital.Dock = DockStyle.Fill;
                         var tpDigital = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, currentTabIndex + 1));
                         tpDigital.Controls.Add(ucDigital);
@@ -98,14 +140,14 @@ namespace locatorconfig
         {
             System.Console.WriteLine("Model updated");
             RailWay.direction = cbxDirection.SelectedIndex + 1;
-            RailWay.delayLR = Convert.ToInt32((tbxDelayLR.Text == "") ? "0" : tbxDelayLR.Text);
-            RailWay.delayRL = Convert.ToInt32((tbxDelayRL.Text == "") ? "0" : tbxDelayRL.Text);
-            RailWay.maxSpeedLR = Convert.ToInt32((tbxMaxSpeedLR.Text == "") ? "0" : tbxMaxSpeedLR.Text);
-            RailWay.maxSpeedRL = Convert.ToInt32((tbxMaxSpeedRL.Text == "") ? "0" : tbxMaxSpeedRL.Text);
-            RailWay.timeCounterWrongL = Convert.ToInt32((tbxTimeCounterWrongL.Text == "") ? "0" : tbxTimeCounterWrongL.Text);
-            RailWay.timeCounterWrongR = Convert.ToInt32((tbxTimeCounterWrongR.Text == "") ? "0" : tbxTimeCounterWrongR.Text);
-            RailWay.timeNotificationTrainNotExitRL = Convert.ToInt32((tbxTimeNotificationTrainNotExitRL.Text == "") ? "0" : tbxTimeNotificationTrainNotExitRL.Text);
-            RailWay.timeNotificationTrainNotExitLR = Convert.ToInt32((tbxTimeNotificationTrainNotExitLR.Text == "") ? "0" : tbxTimeNotificationTrainNotExitLR.Text);
+            RailWay.delayLR = Convert.ToDouble((tbxDelayLR.Text == "") ? "0" : tbxDelayLR.Text);
+            RailWay.delayRL = Convert.ToDouble((tbxDelayRL.Text == "") ? "0" : tbxDelayRL.Text);
+            RailWay.maxSpeedLR = Convert.ToDouble((tbxMaxSpeedLR.Text == "") ? "0" : tbxMaxSpeedLR.Text);
+            RailWay.maxSpeedRL = Convert.ToDouble((tbxMaxSpeedRL.Text == "") ? "0" : tbxMaxSpeedRL.Text);
+            RailWay.timeCounterWrongL = Convert.ToDouble((tbxTimeCounterWrongL.Text == "") ? "0" : tbxTimeCounterWrongL.Text);
+            RailWay.timeCounterWrongR = Convert.ToDouble((tbxTimeCounterWrongR.Text == "") ? "0" : tbxTimeCounterWrongR.Text);
+            RailWay.timeNotificationTrainNotExitRL = Convert.ToDouble((tbxTimeNotificationTrainNotExitRL.Text == "") ? "0" : tbxTimeNotificationTrainNotExitRL.Text);
+            RailWay.timeNotificationTrainNotExitLR = Convert.ToDouble((tbxTimeNotificationTrainNotExitLR.Text == "") ? "0" : tbxTimeNotificationTrainNotExitLR.Text);
             for (int i = 0; i < AppConstants.NUM_OF_SENSORS; i++)
             {
                 switch (RailWay.sensors[i].getCirciutType())
@@ -126,59 +168,6 @@ namespace locatorconfig
                 }
             }
             RailWay.print();
-        }
-        private void tbxDelayLR_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxDelayRL_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxMaxSpeedLR_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxMaxSpeedRL_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxTimeCounterWrongL_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxTimeCounterWrongR_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxTimeNotificationTrainNotExitRL_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void tbxTimeNotificationTrainNotExitLR_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
-        }
-
-        private void cbxDirection_TextChanged(object sender, EventArgs e)
-        {
-            if (this.IsHandleCreated)
-                updateModel();
         }
 
         private void btnSetRailCircuitCoordinates_Click(object sender, EventArgs e)

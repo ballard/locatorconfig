@@ -12,8 +12,6 @@ namespace locatorconfig
 {
     public partial class DigitalRailCircuitUserControl : UserControl
     {
-        public event EventHandler ContentChanged;
-
         public DigitalRailCircuitUserControl()
         {
             InitializeComponent();
@@ -25,16 +23,6 @@ namespace locatorconfig
         public int getPort()
         {
             return Convert.ToInt32((this.editPort.Text == "") ? "0" : this.editPort.Text);
-        }
-        private void editPort_TextChanged(object sender, EventArgs e)
-        {
-            if (ContentChanged != null)
-                ContentChanged(this, new EventArgs());
-        }
-        private void editPin_TextChanged(object sender, EventArgs e)
-        {
-            if (ContentChanged != null)
-                ContentChanged(this, new EventArgs());
         }
     }
 }

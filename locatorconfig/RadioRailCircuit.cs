@@ -8,7 +8,7 @@ namespace locatorconfig
 {
     public class RadioRailCircuit: RailCircuit
     {
-        public int frequency { get; set; }
+        public double frequency { get; set; }
 
         public RadioRailCircuit()
         {

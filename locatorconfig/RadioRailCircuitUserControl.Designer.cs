@@ -35,9 +35,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.editFrequency = new System.Windows.Forms.TextBox();
+            this.editFrequency = new System.Windows.Forms.NumericUpDown();
             this.DigitalRailChainPanel.SuspendLayout();
             this.DigitalRailChainTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.editFrequency)).BeginInit();
             this.SuspendLayout();
             // 
             // DigitalRailChainPanel
@@ -136,12 +137,11 @@
             // editFrequency
             // 
             this.editFrequency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.editFrequency.DecimalPlaces = 2;
             this.editFrequency.Location = new System.Drawing.Point(283, 115);
             this.editFrequency.Name = "editFrequency";
             this.editFrequency.Size = new System.Drawing.Size(274, 20);
-            this.editFrequency.TabIndex = 10;
-            this.editFrequency.Text = "0";
-            this.editFrequency.TextChanged += new System.EventHandler(this.editFrequency_TextChanged);
+            this.editFrequency.TabIndex = 8;
             // 
             // RadioRailCircuitUserControl
             // 
@@ -153,6 +153,7 @@
             this.DigitalRailChainPanel.ResumeLayout(false);
             this.DigitalRailChainTableLayout.ResumeLayout(false);
             this.DigitalRailChainTableLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.editFrequency)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -166,6 +167,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox editFrequency;
+        private System.Windows.Forms.NumericUpDown editFrequency;
     }
 }

@@ -36,10 +36,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.editPort = new System.Windows.Forms.TextBox();
-            this.editPin = new System.Windows.Forms.TextBox();
+            this.editPort = new System.Windows.Forms.NumericUpDown();
+            this.editPin = new System.Windows.Forms.NumericUpDown();
             this.DigitalRailChainPanel.SuspendLayout();
             this.DigitalRailChainTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.editPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.editPin)).BeginInit();
             this.SuspendLayout();
             // 
             // DigitalRailChainPanel
@@ -155,9 +157,7 @@
             this.editPort.Location = new System.Drawing.Point(298, 100);
             this.editPort.Name = "editPort";
             this.editPort.Size = new System.Drawing.Size(290, 20);
-            this.editPort.TabIndex = 10;
-            this.editPort.Text = "0";
-            this.editPort.TextChanged += new System.EventHandler(this.editPort_TextChanged);
+            this.editPort.TabIndex = 12;
             // 
             // editPin
             // 
@@ -165,9 +165,7 @@
             this.editPin.Location = new System.Drawing.Point(298, 144);
             this.editPin.Name = "editPin";
             this.editPin.Size = new System.Drawing.Size(290, 20);
-            this.editPin.TabIndex = 11;
-            this.editPin.Text = "0";
-            this.editPin.TextChanged += new System.EventHandler(this.editPin_TextChanged);
+            this.editPin.TabIndex = 13;
             // 
             // DigitalRailCircuitUserControl
             // 
@@ -179,6 +177,8 @@
             this.DigitalRailChainPanel.ResumeLayout(false);
             this.DigitalRailChainTableLayout.ResumeLayout(false);
             this.DigitalRailChainTableLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.editPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.editPin)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -193,7 +193,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox editPort;
-        private System.Windows.Forms.TextBox editPin;
+        private System.Windows.Forms.NumericUpDown editPort;
+        private System.Windows.Forms.NumericUpDown editPin;
     }
 }
