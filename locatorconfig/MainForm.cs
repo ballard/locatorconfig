@@ -13,7 +13,10 @@ namespace locatorconfig
 {
     public partial class MainForm : Form
     {
-        private int tabsNum = 0;
+        private int tabsNum// = 0;
+        {   
+            get { return this.waysTabControl.TabCount; }
+        }
 
         public MainForm()
         {
@@ -45,7 +48,7 @@ namespace locatorconfig
                 var uc = new WayUserСontrol();
                 uc.Dock = DockStyle.Fill;
                 var tp = new TabPage(String.Format(AppConstants.STR_WAY, tabIndex + 1));
-                tabsNum++;
+                //tabsNum++;
                 tp.Controls.Add(uc);
                 this.waysTabControl.TabPages.Insert(tabIndex + 1, tp);
                 this.updateWaysNums();
@@ -73,7 +76,7 @@ namespace locatorconfig
                 this.waysTabControl.TabPages.Remove(currentTab);
                 currentTab.Dispose();
                 
-                tabsNum--;
+                //tabsNum--;
                 this.updateWaysNums();
 
                 if (tabIndex > 0)
