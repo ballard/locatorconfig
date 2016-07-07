@@ -59,7 +59,20 @@ namespace locatorconfig
 
             if (0 < tabsNum)
             {
-                this.waysTabControl.TabPages.Remove(this.waysTabControl.SelectedTab);
+                var currentTab = waysTabControl.SelectedTab;
+                
+                foreach (var userContolrol in waysTabControl.SelectedTab.Controls)
+                {
+                    if (userContolrol is WayUserСontrol)
+                    {
+                        var currentWayUserControl = (WayUserСontrol)userContolrol;
+                        currentWayUserControl.disposeControls(currentWayUserControl);
+                    }
+                }
+
+                this.waysTabControl.TabPages.Remove(currentTab);
+                currentTab.Dispose();
+                
                 tabsNum--;
                 this.updateWaysNums();
 
@@ -196,14 +209,7 @@ namespace locatorconfig
                 }                
             }
 
-
-            return fileString.ToString();// (fileString.ToString());             
-
-            //string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);            
-            //using (var outputFile = new StreamWriter(mydocpath + @"\WriteTextAsync.txt"))
-            //{
-            //    await outputFile.WriteAsync(fileString.ToString());                
-            //}
+            return fileString.ToString();
         }
 
         private void saveAs_Click(object sender, EventArgs e)

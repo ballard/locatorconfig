@@ -52,24 +52,21 @@ namespace locatorconfig
                     initialSetupControls(childControl);
                 }
             }
-            //else {
-            //    System.Console.WriteLine("control type is: " + control.GetType().ToString());
-            //    switch (control.GetType().ToString())
-            //    {
-            //        case "System.Windows.Forms.TextBox":
-            //            control.TextChanged += new EventHandler(controlOnTextChanged);
-            //            break;
-            //        case "System.Windows.Forms.ComboBox":
-            //            control.TextChanged += new EventHandler(controlOnTextChanged);
-            //            break;
-            //        case "System.Windows.Forms.NumericUpDown":
-            //            control.TextChanged += new EventHandler(controlOnTextChanged);
-            //            break;
+        }
 
-            //        default:
-            //            break;
-            //    }
-            //}
+        public void disposeControls(Control control)
+        {
+            if (control.HasChildren)
+            {
+                foreach (Control childControl in control.Controls)
+                {
+                    disposeControls(childControl);
+                }
+            } else
+            {
+                control.Dispose();
+            }
+
         }
 
         private void controlOnTextChanged(object sender, System.EventArgs e)
@@ -100,16 +97,7 @@ namespace locatorconfig
                     changeRailTypeDigital.ShowDialog();
                     if (changeRailTypeDigital.DialogResult == DialogResult.OK)
                     {
-                        this.tabRailChain.TabPages.Remove(this.tabRailChain.SelectedTab);
-                        var ucRadio = new RadioRailCircuitUserControl();
-                        initialSetupControls(ucRadio);
-                        ucRadio.Dock = DockStyle.Fill;
-                        var tpRadio = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, currentTabIndex + 1));
-                        tpRadio.Controls.Add(ucRadio);
-                        this.tabRailChain.TabPages.Insert(currentTabIndex, tpRadio);
-                        RailWay.changeRailCircuitType(currentTabIndex, RailCircuitType.Radio);
-                        this.tabRailChain.SelectTab(currentTabIndex);
-                        updateModel();
+                        swapTabSontrol(RailCircuitType.Radio, currentTabIndex);
                     }
                     break;
                 case RailCircuitType.Radio:
@@ -117,19 +105,34 @@ namespace locatorconfig
                     changeRailTypeRadio.ShowDialog();
                     if (changeRailTypeRadio.DialogResult == DialogResult.OK)
                     {
-                        this.tabRailChain.TabPages.Remove(this.tabRailChain.SelectedTab);
-                        var ucDigital = new DigitalRailCircuitUserControl();
-                        initialSetupControls(ucDigital);
-                        ucDigital.Dock = DockStyle.Fill;
-                        var tpDigital = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, currentTabIndex + 1));
-                        tpDigital.Controls.Add(ucDigital);
-                        this.tabRailChain.TabPages.Insert(currentTabIndex, tpDigital);
-                        RailWay.changeRailCircuitType(currentTabIndex, RailCircuitType.Digital);
-                        this.tabRailChain.SelectTab(currentTabIndex);
-                        updateModel();
+                        swapTabSontrol(RailCircuitType.Digital, currentTabIndex);
                     }
                     break;
             }
+        }
+
+        private void swapTabSontrol(RailCircuitType currentType, int tabIndex)
+        {
+            UserControl uc = new UserControl();
+            switch (currentType)
+            {
+                case RailCircuitType.Digital:
+                    uc = new DigitalRailCircuitUserControl();
+                    break;
+                case RailCircuitType.Radio:
+                    uc = new RadioRailCircuitUserControl();
+                    break;
+            }
+            System.Console.WriteLine("new control type is: " + uc.GetType().ToString());
+            this.tabRailChain.TabPages.Remove(this.tabRailChain.SelectedTab);            
+            initialSetupControls(uc);
+            uc.Dock = DockStyle.Fill;
+            var tp = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, tabIndex + 1));
+            tp.Controls.Add(uc);
+            this.tabRailChain.TabPages.Insert(tabIndex, tp);
+            RailWay.changeRailCircuitType(tabIndex, currentType);
+            this.tabRailChain.SelectTab(tabIndex);
+            updateModel();
         }
 
         private void btnSaveWayChanges_Click(object sender, EventArgs e)
@@ -153,17 +156,31 @@ namespace locatorconfig
                 switch (RailWay.sensors[i].getCirciutType())
                 {
                     case RailCircuitType.Digital:
-                        var digtalCircuitControl = (DigitalRailCircuitUserControl)tabRailChain.TabPages[i].Controls[0];
-                        var digitalCircuit = new DigitalRailCircuit();
-                        digitalCircuit.pinNumber = digtalCircuitControl.getPin();
-                        digitalCircuit.portNumber = digtalCircuitControl.getPort();
-                        RailWay.sensors[i] = digitalCircuit;
+                        foreach (var control in tabRailChain.TabPages[i].Controls)
+                        {
+                            if (control is DigitalRailCircuitUserControl)
+                            {
+                                var digitalControl = (DigitalRailCircuitUserControl)control;
+                                var digitalCircuit = new DigitalRailCircuit();
+                                digitalCircuit.pinNumber = digitalControl.getPin();
+                                digitalCircuit.portNumber = digitalControl.getPort();
+                                RailWay.sensors[i] = digitalCircuit;
+                                break;
+                            }
+                        }
                         break;
                     case RailCircuitType.Radio:
-                        var radioCircuitControl = (RadioRailCircuitUserControl)tabRailChain.TabPages[i].Controls[0];
-                        var radioCircuit = new RadioRailCircuit();
-                        radioCircuit.frequency = radioCircuitControl.getFrequency();
-                        RailWay.sensors[i] = radioCircuit;
+                        foreach (var control in tabRailChain.TabPages[i].Controls)
+                        {
+                            if (control is RadioRailCircuitUserControl)
+                            {
+                                var radioControl = (RadioRailCircuitUserControl)control;
+                                var radioCircuit = new RadioRailCircuit();
+                                radioCircuit.frequency = radioControl.getFrequency();
+                                RailWay.sensors[i] = radioCircuit;
+                                break;
+                            }
+                        }
                         break;
                 }
             }
@@ -180,22 +197,13 @@ namespace locatorconfig
                 switch (changeRailCircuitConfig.railCircuitConfig)
                 {
                     case CircuitConfig.FirstOverlay:
-                        RailWay.wayCircuitConfig = CircuitConfig.FirstOverlay;
-                        this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlayFirst;
-                        this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
-                        System.Console.WriteLine("Rail circuit configuration changed to first overlay");
+                        changeCircuitConfig(CircuitConfig.FirstOverlay, Properties.Resources.OverlayFirst);
                         break;
                     case CircuitConfig.SecondOverlay:
-                        RailWay.wayCircuitConfig = CircuitConfig.SecondOverlay;
-                        this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlaySecond;
-                        this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
-                        System.Console.WriteLine("Rail circuit configuration changed to second overlay");
+                        changeCircuitConfig(CircuitConfig.SecondOverlay, Properties.Resources.OverlaySecond);
                         break;
                     case CircuitConfig.NoOverlay:
-                        RailWay.wayCircuitConfig = CircuitConfig.NoOverlay;
-                        this.wayConfigImagePanel.BackgroundImage = Properties.Resources.NoOverlay;
-                        this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
-                        System.Console.WriteLine("Rail circuit configuration changed to no overlay");
+                        changeCircuitConfig(CircuitConfig.NoOverlay, Properties.Resources.NoOverlay);
                         break;
                 }
                 Array.Copy(changeRailCircuitConfig.points, RailWay.wayCircuitConfigPoints, AppConstants.NUM_OF_POINTS);
@@ -203,5 +211,14 @@ namespace locatorconfig
                 RailWay.print();
             }
         }
+
+        private void changeCircuitConfig(CircuitConfig config, Bitmap image)
+        {
+            RailWay.wayCircuitConfig = config;
+            this.wayConfigImagePanel.BackgroundImage = image;
+            this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+            System.Console.WriteLine("Rail circuit configuration changed to " + config.GetType().ToString());
+        }
+
     }
 }
