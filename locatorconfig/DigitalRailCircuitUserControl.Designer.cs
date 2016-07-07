@@ -155,6 +155,11 @@
             // 
             this.editPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.editPort.Location = new System.Drawing.Point(298, 100);
+            this.editPort.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
             this.editPort.Name = "editPort";
             this.editPort.Size = new System.Drawing.Size(290, 20);
             this.editPort.TabIndex = 12;
@@ -163,6 +168,11 @@
             // 
             this.editPin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.editPin.Location = new System.Drawing.Point(298, 144);
+            this.editPin.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
             this.editPin.Name = "editPin";
             this.editPin.Size = new System.Drawing.Size(290, 20);
             this.editPin.TabIndex = 13;

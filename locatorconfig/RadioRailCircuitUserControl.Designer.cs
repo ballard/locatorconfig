@@ -139,6 +139,11 @@
             this.editFrequency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.editFrequency.DecimalPlaces = 2;
             this.editFrequency.Location = new System.Drawing.Point(283, 115);
+            this.editFrequency.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
             this.editFrequency.Name = "editFrequency";
             this.editFrequency.Size = new System.Drawing.Size(274, 20);
             this.editFrequency.TabIndex = 8;
