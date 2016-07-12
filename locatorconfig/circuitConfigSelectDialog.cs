@@ -101,25 +101,25 @@ namespace locatorconfig
         private void textBoxPointA_ValueChanged(object sender, EventArgs e)
         {
             if (this.IsHandleCreated)
-                this.points[0] = Convert.ToInt32(((textBoxPointA.Text == "") || (textBoxPointA.Text == "-")) ? "0" : textBoxPointA.Text);
+                this.points[0] = Convert.ToInt32(((this.textBoxPointA.Text == "") || (this.textBoxPointA.Text == "-")) ? "0" : this.textBoxPointA.Text);
         }
 
         private void textBoxPointB_ValueChanged(object sender, EventArgs e)
         {
             if (this.IsHandleCreated)
-                this.points[1] = Convert.ToInt32(((textBoxPointB.Text == "") || (textBoxPointB.Text == "-")) ? "0" : textBoxPointB.Text);
+                this.points[1] = Convert.ToInt32(((this.textBoxPointB.Text == "") || (this.textBoxPointB.Text == "-")) ? "0" : this.textBoxPointB.Text);
         }
 
         private void textBoxPointC_ValueChanged(object sender, EventArgs e)
         {
             if (this.IsHandleCreated)
-                this.points[2] = Convert.ToInt32(((textBoxPointC.Text == "") || (textBoxPointC.Text == "-")) ? "0" : textBoxPointC.Text);
+                this.points[2] = Convert.ToInt32(((this.textBoxPointC.Text == "") || (this.textBoxPointC.Text == "-")) ? "0" : this.textBoxPointC.Text);
         }
 
         private void textBoxPointD_ValueChanged(object sender, EventArgs e)
         {
             if (this.IsHandleCreated)
-                this.points[3] = Convert.ToInt32(((textBoxPointD.Text == "") || (textBoxPointD.Text == "-")) ? "0" : textBoxPointD.Text);
+                this.points[3] = Convert.ToInt32(((this.textBoxPointD.Text == "") || (this.textBoxPointD.Text == "-")) ? "0" : this.textBoxPointD.Text);
         }
     }
 }

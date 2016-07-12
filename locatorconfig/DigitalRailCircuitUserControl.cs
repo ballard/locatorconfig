@@ -18,11 +18,11 @@ namespace locatorconfig
         }
         public int getPin()
         {
-            return Convert.ToInt32((this.editPin.Text == "") ? "0" : this.editPin.Text);
+            return Convert.ToInt32(((this.editPin.Text == "") || (this.editPin.Text == "-")) ? "0" : this.editPin.Text);
         }
         public int getPort()
         {
-            return Convert.ToInt32((this.editPort.Text == "") ? "0" : this.editPort.Text);
+            return Convert.ToInt32(((this.editPort.Text == "") || (this.editPort.Text == "-")) ? "0" : this.editPort.Text);
         }
     }
 }

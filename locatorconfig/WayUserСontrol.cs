@@ -143,14 +143,14 @@ namespace locatorconfig
         {
             System.Console.WriteLine("Model updated");
             RailWay.direction = cbxDirection.SelectedIndex + 1;
-            RailWay.delayLR = Convert.ToDouble((tbxDelayLR.Text == "") ? "0" : tbxDelayLR.Text);
-            RailWay.delayRL = Convert.ToDouble((tbxDelayRL.Text == "") ? "0" : tbxDelayRL.Text);
-            RailWay.maxSpeedLR = Convert.ToDouble((tbxMaxSpeedLR.Text == "") ? "0" : tbxMaxSpeedLR.Text);
-            RailWay.maxSpeedRL = Convert.ToDouble((tbxMaxSpeedRL.Text == "") ? "0" : tbxMaxSpeedRL.Text);
-            RailWay.timeCounterWrongL = Convert.ToDouble((tbxTimeCounterWrongL.Text == "") ? "0" : tbxTimeCounterWrongL.Text);
-            RailWay.timeCounterWrongR = Convert.ToDouble((tbxTimeCounterWrongR.Text == "") ? "0" : tbxTimeCounterWrongR.Text);
-            RailWay.timeNotificationTrainNotExitRL = Convert.ToDouble((tbxTimeNotificationTrainNotExitRL.Text == "") ? "0" : tbxTimeNotificationTrainNotExitRL.Text);
-            RailWay.timeNotificationTrainNotExitLR = Convert.ToDouble((tbxTimeNotificationTrainNotExitLR.Text == "") ? "0" : tbxTimeNotificationTrainNotExitLR.Text);
+            RailWay.delayLR = Convert.ToDouble(((this.tbxDelayLR.Text == "") || (this.tbxDelayLR.Text == "-")) ? "0" : this.tbxDelayLR.Text);
+            RailWay.delayRL = Convert.ToDouble(((this.tbxDelayRL.Text == "") || (this.tbxDelayRL.Text == "-")) ? "0" : this.tbxDelayRL.Text);
+            RailWay.maxSpeedLR = Convert.ToDouble(((this.tbxMaxSpeedLR.Text == "") || (this.tbxMaxSpeedLR.Text == "-")) ? "0" : this.tbxMaxSpeedLR.Text);
+            RailWay.maxSpeedRL = Convert.ToDouble(((this.tbxMaxSpeedRL.Text == "") || (this.tbxMaxSpeedRL.Text == "-")) ? "0" : this.tbxMaxSpeedRL.Text);
+            RailWay.timeCounterWrongL = Convert.ToDouble(((this.tbxTimeCounterWrongL.Text == "") || (this.tbxTimeCounterWrongL.Text == "-")) ? "0" : this.tbxTimeCounterWrongL.Text);
+            RailWay.timeCounterWrongR = Convert.ToDouble(((this.tbxTimeCounterWrongR.Text == "") || (this.tbxTimeCounterWrongR.Text == "-")) ? "0" : this.tbxTimeCounterWrongR.Text);
+            RailWay.timeNotificationTrainNotExitRL = Convert.ToDouble(((this.tbxTimeNotificationTrainNotExitRL.Text == "") || (this.tbxTimeNotificationTrainNotExitRL.Text == "-")) ? "0" : this.tbxTimeNotificationTrainNotExitRL.Text);
+            RailWay.timeNotificationTrainNotExitLR = Convert.ToDouble(((this.tbxTimeNotificationTrainNotExitLR.Text == "") || (this.tbxTimeNotificationTrainNotExitLR.Text == "-")) ? "0" : this.tbxTimeNotificationTrainNotExitLR.Text);
             for (int i = 0; i < AppConstants.NUM_OF_SENSORS; i++)
             {
                 switch (RailWay.sensors[i].getCirciutType())

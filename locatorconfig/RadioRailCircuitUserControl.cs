@@ -18,7 +18,7 @@ namespace locatorconfig
         }
         public double getFrequency()
         {
-            return Convert.ToDouble((this.editFrequency.Text == "") ? "0" : this.editFrequency.Text);
+            return Convert.ToDouble(((this.editFrequency.Text == "") || (this.editFrequency.Text == "-")) ? "0" : this.editFrequency.Text);
         }
     }
 }
