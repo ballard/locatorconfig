@@ -38,7 +38,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFile = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.closeApp = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,7 +116,7 @@
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.создатьToolStripMenuItem,
-            this.открытьToolStripMenuItem,
+            this.openFile,
             this.saveToolStripMenuItem,
             this.saveAs,
             this.closeApp});
@@ -131,12 +131,12 @@
             this.создатьToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.создатьToolStripMenuItem.Text = "Создать";
             // 
-            // открытьToolStripMenuItem
+            // openFile
             // 
-            this.открытьToolStripMenuItem.Enabled = false;
-            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.открытьToolStripMenuItem.Text = "Открыть...";
+            this.openFile.Name = "openFile";
+            this.openFile.Size = new System.Drawing.Size(162, 22);
+            this.openFile.Text = "Открыть...";
+            this.openFile.Click += new System.EventHandler(this.openFile_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -221,7 +221,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFile;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAs;
         private System.Windows.Forms.ToolStripMenuItem closeApp;

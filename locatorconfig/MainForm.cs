@@ -237,5 +237,38 @@ namespace locatorconfig
         {
             this.Close();
         }
+
+        private void openFile_Click(object sender, EventArgs e)
+        {
+            Stream myStream = null;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "cfg files (*.cfg)|*.cfg|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if ((myStream = openFileDialog1.OpenFile()) != null)
+                    {
+                        using (System.IO.StreamReader reader = new System.IO.StreamReader(myStream))
+                        {
+                            string textLine = string.Empty;
+                            int lineCounter = 0;
+                            while ((textLine = reader.ReadLine()) != null)
+                            {
+                                System.Console.WriteLine(string.Format("Строка {0}: " + textLine, lineCounter));
+                                lineCounter++;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка чтения файла. Текст ошибки: " + ex.Message);
+                }
+            }            
+        }
     }
 }
