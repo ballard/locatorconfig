@@ -17,11 +17,23 @@ namespace locatorconfig
         public WayUserСontrol()
         {
             InitializeComponent();
+
             RailWay = new Way();
-            cbxDirection.SelectedIndex = 0;
+
+            cbxDirection.SelectedIndex = RailWay.direction;
+            tbxDelayLR.Text = RailWay.delayLR.ToString();
+            tbxDelayRL.Text = RailWay.delayRL.ToString();
+            tbxMaxSpeedLR.Text = RailWay.maxSpeedLR.ToString();
+            tbxMaxSpeedRL.Text = RailWay.maxSpeedRL.ToString();
+            tbxTimeCounterWrongL.Text = RailWay.timeCounterWrongL.ToString();
+            tbxTimeCounterWrongR.Text = RailWay.timeCounterWrongR.ToString();
+            tbxTimeNotificationTrainNotExitLR.Text = RailWay.timeNotificationTrainNotExitLR.ToString();
+            tbxTimeNotificationTrainNotExitRL.Text = RailWay.timeNotificationTrainNotExitRL.ToString();
+
             for (var i = 0; i < AppConstants.NUM_OF_SENSORS; i++)
             {
-                var uc = new DigitalRailCircuitUserControl();
+                var sensor = (DigitalRailCircuit)RailWay.sensors[i];
+                var uc = new DigitalRailCircuitUserControl(sensor.pinNumber, sensor.portNumber);
                 uc.Dock = DockStyle.Fill;
                 var tp = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, i + 1));
                 tp.Controls.Add(uc);
@@ -30,6 +42,8 @@ namespace locatorconfig
             this.updateCircuitConfigPoints();
             this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlayFirst;
             this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+
+            updateModel();
             initialSetupControls(this);
         }
 
@@ -117,10 +131,13 @@ namespace locatorconfig
             switch (currentType)
             {
                 case RailCircuitType.Digital:
-                    uc = new DigitalRailCircuitUserControl();
+
+                    var digitalCircuit = new DigitalRailCircuit();
+                    uc = new DigitalRailCircuitUserControl(digitalCircuit.pinNumber, digitalCircuit.portNumber);
                     break;
                 case RailCircuitType.Radio:
-                    uc = new RadioRailCircuitUserControl();
+                    var radioCircuit = new RadioRailCircuit();
+                    uc = new RadioRailCircuitUserControl(radioCircuit.frequency);
                     break;
             }
             System.Console.WriteLine("new control type is: " + uc.GetType().ToString());
@@ -139,6 +156,12 @@ namespace locatorconfig
         {
             updateModel();
         }
+
+        private void loadModel()
+        {
+
+        }
+
         private void updateModel()
         {
             System.Console.WriteLine("Model updated");

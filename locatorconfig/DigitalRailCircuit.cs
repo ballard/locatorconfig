@@ -8,13 +8,11 @@ namespace locatorconfig
 {
     public class DigitalRailCircuit : RailCircuit
     {
-        public int portNumber { get; set; }
-        public int pinNumber { get; set; }
+        public int portNumber { get; set; } = 8;
+        public int pinNumber { get; set; } = 7;
 
         public DigitalRailCircuit()
         {
-            portNumber = 0;
-            pinNumber = 0;
             circuitType = RailCircuitType.Digital;
         }
     }

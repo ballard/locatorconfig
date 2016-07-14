@@ -9,14 +9,14 @@ namespace locatorconfig
     public class Way
     {
         public int direction { get; set; } = 1;
-        public double delayLR { get; set; }
-        public double delayRL { get; set; }
-        public double maxSpeedLR { get; set; }
-        public double maxSpeedRL { get; set; }
-        public double timeCounterWrongL { get; set; }
-        public double timeCounterWrongR { get; set; }
-        public double timeNotificationTrainNotExitRL { get; set; }
-        public double timeNotificationTrainNotExitLR { get; set; }
+        public double delayLR { get; set; } = 0;
+        public double delayRL { get; set; } = 0;
+        public double maxSpeedLR { get; set; } = 30;
+        public double maxSpeedRL { get; set; } = 30;
+        public double timeCounterWrongL { get; set; } = 240;
+        public double timeCounterWrongR { get; set; } = 240;
+        public double timeNotificationTrainNotExitRL { get; set; } = 180;
+        public double timeNotificationTrainNotExitLR { get; set; } = 180;
         public double[] wayCircuitConfigPoints { get; set; }
         public CircuitConfig wayCircuitConfig { get; set; }
         public RailCircuity[] sensors { get; set; }
@@ -34,6 +34,10 @@ namespace locatorconfig
                 sensors[i] = new DigitalRailCircuit();                
             }
         }
+
+
+
+
         public void changeRailCircuitType(int circuidId, RailCircuitType circuitType)
         {
             if (0 <= circuidId && circuidId < AppConstants.NUM_OF_SENSORS)
@@ -82,6 +86,6 @@ namespace locatorconfig
                         break;
                 }
             }
-        }
+        }                
     }
 }

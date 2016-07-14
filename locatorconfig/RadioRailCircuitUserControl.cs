@@ -16,6 +16,13 @@ namespace locatorconfig
         {
             InitializeComponent();
         }
+
+        public RadioRailCircuitUserControl(double frequency)
+        {
+            InitializeComponent();
+            this.editFrequency.Text = frequency.ToString();
+        }
+
         public double getFrequency()
         {
             return Convert.ToDouble(((this.editFrequency.Text == "") || (this.editFrequency.Text == "-")) ? "0" : this.editFrequency.Text);

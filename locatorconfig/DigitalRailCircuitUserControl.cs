@@ -16,6 +16,14 @@ namespace locatorconfig
         {
             InitializeComponent();
         }
+
+        public DigitalRailCircuitUserControl(int pin, int port)
+        {
+            InitializeComponent();
+            this.editPin.Text = pin.ToString();
+            this.editPort.Text = port.ToString();
+        }
+
         public int getPin()
         {
             return Convert.ToInt32(((this.editPin.Text == "") || (this.editPin.Text == "-")) ? "0" : this.editPin.Text);

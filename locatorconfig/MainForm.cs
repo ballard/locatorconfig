@@ -206,6 +206,22 @@ namespace locatorconfig
                                         break;
                                 }
                             }
+
+                            var configId = 0;
+                            switch (currentWay.RailWay.wayCircuitConfig)
+                            {
+                                case CircuitConfig.FirstOverlay:
+                                    configId = 1;
+                                    break;
+                                case CircuitConfig.SecondOverlay:
+                                    configId = 2;
+                                    break;
+                                case CircuitConfig.NoOverlay:
+                                    configId = 3;
+                                    break;                         
+                            }
+                            fileString.AppendFormat("m_way_{0}_circuit_config = {1}", i+1, configId);
+                            fileString.AppendLine();
                             break;
                         }
                     }
@@ -240,6 +256,9 @@ namespace locatorconfig
 
         private void openFile_Click(object sender, EventArgs e)
         {
+
+            var fileData = new List<string[]>();
+
             Stream myStream = null;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.InitialDirectory = "c:\\";
@@ -258,10 +277,14 @@ namespace locatorconfig
                             int lineCounter = 0;
                             while ((textLine = reader.ReadLine()) != null)
                             {
+                                fileData.Add(textLine.Split(' '));
                                 System.Console.WriteLine(string.Format("Строка {0}: " + textLine, lineCounter));
                                 lineCounter++;
                             }
                         }
+
+                        loadModel(fileData);
+
                     }
                 }
                 catch (Exception ex)
@@ -269,6 +292,109 @@ namespace locatorconfig
                     MessageBox.Show("Ошибка чтения файла. Текст ошибки: " + ex.Message);
                 }
             }            
+        }
+
+        private void loadModel(List<string[]> data)
+        {
+            foreach (var numWaysStr in data)
+            {
+                if (numWaysStr[0] == AppConstants.M_NUM_WAYS)
+                {
+                    var m_num_ways = Convert.ToInt32(numWaysStr[2]);
+                    for (int i = 0; i < m_num_ways; i++)
+                    {
+                        var wayCount = i + 1;
+                        System.Console.WriteLine(string.Format("Create way number {0}", wayCount));
+                        var way = new Way();
+                        foreach (var wayConfig in data)
+                        {
+                            var currentWayConfig = string.Format(AppConstants.M_WAY_PREFIX, wayCount);
+                            if (wayConfig[0] == currentWayConfig)
+                            {
+                                way.direction = Convert.ToInt32(wayConfig[2]);
+                                way.delayLR = Convert.ToDouble(wayConfig[3]);
+                                way.delayRL = Convert.ToDouble(wayConfig[4]);
+                                way.maxSpeedLR = Convert.ToDouble(wayConfig[5]);
+                                way.maxSpeedRL = Convert.ToDouble(wayConfig[6]);
+                                way.timeCounterWrongL = Convert.ToDouble(wayConfig[7]);
+                                way.timeCounterWrongR = Convert.ToDouble(wayConfig[8]);
+                                way.timeNotificationTrainNotExitRL = Convert.ToDouble(wayConfig[9]);
+                                way.timeNotificationTrainNotExitLR = Convert.ToDouble(wayConfig[10]);
+
+
+
+
+
+
+                                var sensorsCount = 0;
+                                foreach (var sensors in data)
+                                {
+                                    if (sensors[0].Contains(string.Format(AppConstants.M_SENSOR_PREFIX, wayCount)))
+                                    {
+                                        var currentCircuitId = Convert.ToInt32(sensors[0].Last().ToString()) - 1;
+                                        switch (sensors[2])
+                                        {
+                                            case "1":
+                                                var digitalSensor = new DigitalRailCircuit();
+                                                digitalSensor.portNumber = Convert.ToInt32(sensors[5]);
+                                                digitalSensor.pinNumber = Convert.ToInt32(sensors[6]);
+                                                way.sensors[currentCircuitId] = digitalSensor;
+                                                break;
+                                            case "2":
+                                                var radioSensor = new RadioRailCircuit();
+                                                radioSensor.frequency = Convert.ToInt32(sensors[5]);
+                                                way.sensors[currentCircuitId] = radioSensor;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        sensorsCount++;
+                                    }
+                                }
+
+                                foreach (var sensorsConfig in data)
+                                {
+                                    if (sensorsConfig[0].Contains(string.Format(AppConstants.M_CIRCUIT_CONFIG, wayCount)))
+                                    {
+                                        switch (sensorsConfig[2])
+                                        {
+                                            case "1":
+                                                way.wayCircuitConfig = CircuitConfig.FirstOverlay;
+                                                break;
+                                            case "2":
+                                                way.wayCircuitConfig = CircuitConfig.SecondOverlay;
+                                                break;
+                                            case "3":
+                                                way.wayCircuitConfig = CircuitConfig.NoOverlay;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+
+
+
+                                if (sensorsCount == AppConstants.NUM_OF_SENSORS)
+                                {
+                                    //switch 
+
+
+
+
+
+
+                                } else
+                                {
+                                    MessageBox.Show("Ошибка конфигурационого файла. Неверное количество рельсовых цепей.");
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

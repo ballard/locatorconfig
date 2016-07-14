@@ -8,6 +8,13 @@ namespace locatorconfig
 {
     class AppConstants
     {
+        // config keys
+
+        public const string M_NUM_WAYS = "m_num_ways";
+        public const string M_WAY_PREFIX = "m_way_{0}";
+        public const string M_SENSOR_PREFIX = "m_sensor_{0}";
+        public const string M_CIRCUIT_CONFIG = "m_way_{0}_circuit_config";
+
         // string constants
         public const string RAIL_CHAIN_STRING = "РЦ {0}";
         public const string STR_WAY = "Путь {0}";
