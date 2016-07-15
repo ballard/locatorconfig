@@ -44,26 +44,37 @@ namespace locatorconfig
         {
             if (AppConstants.MAX_WAYS > tabsNum)
             {
-                var tabIndex = this.waysTabControl.SelectedIndex;
-                var uc = new WayUserСontrol();
-                uc.Dock = DockStyle.Fill;
-                var tp = new TabPage(String.Format(AppConstants.STR_WAY, tabIndex + 1));
-                //tabsNum++;
-                tp.Controls.Add(uc);
-                this.waysTabControl.TabPages.Insert(tabIndex + 1, tp);
-                this.updateWaysNums();
-                this.waysTabControl.SelectedIndex = tabIndex + 1;
+                var newWay = new Way();
+                createWay(newWay);
             }
         }
 
+        private void createWay(Way newWay)
+        {
+            var tabIndex = this.waysTabControl.SelectedIndex;
+            var uc = new WayUserСontrol(newWay);
+            uc.Dock = DockStyle.Fill;
+            var tp = new TabPage(String.Format(AppConstants.STR_WAY, tabIndex + 1));
+            //tabsNum++;
+            tp.Controls.Add(uc);
+            this.waysTabControl.TabPages.Insert(tabIndex + 1, tp);
+            this.updateWaysNums();
+            this.waysTabControl.SelectedIndex = tabIndex + 1;
+        }
+
         private void btnRemoveWay_Click(object sender, EventArgs e)
+        {
+            removeWay();
+        }
+
+        private void removeWay()
         {
             var tabIndex = this.waysTabControl.SelectedIndex;
 
             if (0 < tabsNum)
             {
                 var currentTab = waysTabControl.SelectedTab;
-                
+
                 foreach (var userContolrol in waysTabControl.SelectedTab.Controls)
                 {
                     if (userContolrol is WayUserСontrol)
@@ -75,7 +86,7 @@ namespace locatorconfig
 
                 this.waysTabControl.TabPages.Remove(currentTab);
                 currentTab.Dispose();
-                
+
                 //tabsNum--;
                 this.updateWaysNums();
 
@@ -89,6 +100,9 @@ namespace locatorconfig
                 }
             }
         }
+            
+
+
 
         private void updateWaysNums()
         {
@@ -267,8 +281,8 @@ namespace locatorconfig
             openFileDialog1.RestoreDirectory = true;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
+                //try
+                //{
                     if ((myStream = openFileDialog1.OpenFile()) != null)
                     {
                         using (System.IO.StreamReader reader = new System.IO.StreamReader(myStream))
@@ -286,16 +300,26 @@ namespace locatorconfig
                         loadModel(fileData);
 
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка чтения файла. Текст ошибки: " + ex.Message);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show("Ошибка чтения файла. Текст ошибки: " + ex.Message);
+                //}
             }            
         }
 
         private void loadModel(List<string[]> data)
         {
+            if (tabsNum > 0)
+            {
+                var tabsCount = tabsNum;
+                while (tabsCount > 0)
+                {
+                    removeWay();
+                    tabsCount--;
+                }
+            }
+
             foreach (var numWaysStr in data)
             {
                 if (numWaysStr[0] == AppConstants.M_NUM_WAYS)
@@ -321,12 +345,27 @@ namespace locatorconfig
                                 way.timeNotificationTrainNotExitRL = Convert.ToDouble(wayConfig[9]);
                                 way.timeNotificationTrainNotExitLR = Convert.ToDouble(wayConfig[10]);
 
-
-
-
-
-
-                                var sensorsCount = 0;
+                                foreach (var sensorsConfig in data)
+                                {
+                                    if (sensorsConfig[0].Contains(string.Format(AppConstants.M_CIRCUIT_CONFIG, wayCount)))
+                                    {
+                                        switch (sensorsConfig[2])
+                                        {
+                                            case "1":
+                                                way.wayCircuitConfig = CircuitConfig.FirstOverlay;
+                                                break;
+                                            case "2":
+                                                way.wayCircuitConfig = CircuitConfig.SecondOverlay;
+                                                break;
+                                            case "3":
+                                                way.wayCircuitConfig = CircuitConfig.NoOverlay;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+                                
                                 foreach (var sensors in data)
                                 {
                                     if (sensors[0].Contains(string.Format(AppConstants.M_SENSOR_PREFIX, wayCount)))
@@ -348,51 +387,32 @@ namespace locatorconfig
                                             default:
                                                 break;
                                         }
-                                        sensorsCount++;
-                                    }
-                                }
 
-                                foreach (var sensorsConfig in data)
-                                {
-                                    if (sensorsConfig[0].Contains(string.Format(AppConstants.M_CIRCUIT_CONFIG, wayCount)))
-                                    {
-                                        switch (sensorsConfig[2])
+                                        switch (currentCircuitId)
                                         {
-                                            case "1":
-                                                way.wayCircuitConfig = CircuitConfig.FirstOverlay;
+                                            case 1:
+                                                way.wayCircuitConfigPoints[0] = Convert.ToDouble(sensors[3]);
                                                 break;
-                                            case "2":
-                                                way.wayCircuitConfig = CircuitConfig.SecondOverlay;
+                                            case 2:
+                                                way.wayCircuitConfigPoints[1] = Convert.ToDouble(sensors[3]);
+                                                way.wayCircuitConfigPoints[2] = Convert.ToDouble(sensors[4]);
                                                 break;
-                                            case "3":
-                                                way.wayCircuitConfig = CircuitConfig.NoOverlay;
-                                                break;
-                                            default:
+                                            case 3:
+                                                way.wayCircuitConfigPoints[3] = Convert.ToDouble(sensors[4]);
                                                 break;
                                         }
                                     }
-                                }
-
-
-
-
-                                if (sensorsCount == AppConstants.NUM_OF_SENSORS)
-                                {
-                                    //switch 
-
-
-
-
-
-
-                                } else
-                                {
-                                    MessageBox.Show("Ошибка конфигурационого файла. Неверное количество рельсовых цепей.");
-                                    return;
-                                }
+                                }                                
                             }
                         }
-                    }
+                        System.Console.WriteLine("Путь: " );
+                        way.print();
+
+                        if (AppConstants.MAX_WAYS > tabsNum)
+                        {
+                            createWay(way);
+                        }
+                    }                    
                 }
             }
         }

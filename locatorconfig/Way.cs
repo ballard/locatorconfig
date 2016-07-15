@@ -8,7 +8,7 @@ namespace locatorconfig
 {
     public class Way
     {
-        public int direction { get; set; } = 1;
+        public int direction { get; set; } = 2;
         public double delayLR { get; set; } = 0;
         public double delayRL { get; set; } = 0;
         public double maxSpeedLR { get; set; } = 30;

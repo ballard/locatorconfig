@@ -14,37 +14,96 @@ namespace locatorconfig
     {
         public Way RailWay { get; set; }
 
-        public WayUserСontrol()
+        //public WayUserСontrol()
+        //{
+        //    InitializeComponent();
+        //    RailWay = new Way();
+        //    cbxDirection.SelectedIndex = RailWay.direction - 1;
+        //    tbxDelayLR.Text = RailWay.delayLR.ToString();
+        //    tbxDelayRL.Text = RailWay.delayRL.ToString();
+        //    tbxMaxSpeedLR.Text = RailWay.maxSpeedLR.ToString();
+        //    tbxMaxSpeedRL.Text = RailWay.maxSpeedRL.ToString();
+        //    tbxTimeCounterWrongL.Text = RailWay.timeCounterWrongL.ToString();
+        //    tbxTimeCounterWrongR.Text = RailWay.timeCounterWrongR.ToString();
+        //    tbxTimeNotificationTrainNotExitLR.Text = RailWay.timeNotificationTrainNotExitLR.ToString();
+        //    tbxTimeNotificationTrainNotExitRL.Text = RailWay.timeNotificationTrainNotExitRL.ToString();
+
+        //    for (var i = 0; i < AppConstants.NUM_OF_SENSORS; i++)
+        //    {
+        //        var sensor = (DigitalRailCircuit)RailWay.sensors[i];
+        //        var uc = new DigitalRailCircuitUserControl(sensor.pinNumber, sensor.portNumber);
+        //        uc.Dock = DockStyle.Fill;
+        //        var tp = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, i + 1));
+        //        tp.Controls.Add(uc);
+        //        this.tabRailChain.TabPages.Add(tp);
+        //    }
+        //    this.updateCircuitConfigPoints();
+        //    this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlayFirst;
+        //    this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+
+        //    updateModel();
+        //    initialSetupControls(this);
+        //}
+
+        public WayUserСontrol(Way wayData)
         {
             InitializeComponent();
-
-            RailWay = new Way();
-
-            cbxDirection.SelectedIndex = RailWay.direction;
-            tbxDelayLR.Text = RailWay.delayLR.ToString();
-            tbxDelayRL.Text = RailWay.delayRL.ToString();
-            tbxMaxSpeedLR.Text = RailWay.maxSpeedLR.ToString();
-            tbxMaxSpeedRL.Text = RailWay.maxSpeedRL.ToString();
-            tbxTimeCounterWrongL.Text = RailWay.timeCounterWrongL.ToString();
-            tbxTimeCounterWrongR.Text = RailWay.timeCounterWrongR.ToString();
-            tbxTimeNotificationTrainNotExitLR.Text = RailWay.timeNotificationTrainNotExitLR.ToString();
-            tbxTimeNotificationTrainNotExitRL.Text = RailWay.timeNotificationTrainNotExitRL.ToString();
+            cbxDirection.SelectedIndex = wayData.direction - 1;
+            tbxDelayLR.Text = wayData.delayLR.ToString();
+            tbxDelayRL.Text = wayData.delayRL.ToString();
+            tbxMaxSpeedLR.Text = wayData.maxSpeedLR.ToString();
+            tbxMaxSpeedRL.Text = wayData.maxSpeedRL.ToString();
+            tbxTimeCounterWrongL.Text = wayData.timeCounterWrongL.ToString();
+            tbxTimeCounterWrongR.Text = wayData.timeCounterWrongR.ToString();
+            tbxTimeNotificationTrainNotExitLR.Text = wayData.timeNotificationTrainNotExitLR.ToString();
+            tbxTimeNotificationTrainNotExitRL.Text = wayData.timeNotificationTrainNotExitRL.ToString();
 
             for (var i = 0; i < AppConstants.NUM_OF_SENSORS; i++)
             {
-                var sensor = (DigitalRailCircuit)RailWay.sensors[i];
-                var uc = new DigitalRailCircuitUserControl(sensor.pinNumber, sensor.portNumber);
+                UserControl uc = new UserControl();
+                switch (wayData.sensors[i].getCirciutType())
+                {
+                    case RailCircuitType.Digital:
+                        var digitalCircuit = (DigitalRailCircuit)wayData.sensors[i];
+                        uc = new DigitalRailCircuitUserControl(digitalCircuit.pinNumber, digitalCircuit.portNumber);
+                        break;
+                    case RailCircuitType.Radio:
+                        var radioCircuit = (RadioRailCircuit)wayData.sensors[i];
+                        uc = new RadioRailCircuitUserControl(radioCircuit.frequency);
+                        break;
+                }
                 uc.Dock = DockStyle.Fill;
                 var tp = new TabPage(String.Format(AppConstants.RAIL_CHAIN_STRING, i + 1));
                 tp.Controls.Add(uc);
                 this.tabRailChain.TabPages.Add(tp);
             }
-            this.updateCircuitConfigPoints();
-            this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlayFirst;
-            this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
 
-            updateModel();
+            this.lblPointA.Text = String.Format(AppConstants.POINT_A_TEXT, wayData.wayCircuitConfigPoints[0].ToString());
+            this.lblPointB.Text = String.Format(AppConstants.POINT_B_TEXT, wayData.wayCircuitConfigPoints[1].ToString());
+            this.lblPointC.Text = String.Format(AppConstants.POINT_C_TEXT, wayData.wayCircuitConfigPoints[2].ToString());
+            this.lblPointD.Text = String.Format(AppConstants.POINT_D_TEXT, wayData.wayCircuitConfigPoints[3].ToString());
+
+            switch (wayData.wayCircuitConfig)
+            {
+                case CircuitConfig.FirstOverlay:
+                    this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlayFirst;
+                    this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+                    break;
+                case CircuitConfig.SecondOverlay:
+                    this.wayConfigImagePanel.BackgroundImage = Properties.Resources.OverlaySecond;
+                    this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+                    break;
+                case CircuitConfig.NoOverlay:
+                    this.wayConfigImagePanel.BackgroundImage = Properties.Resources.NoOverlay;
+                    this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
+                    break;
+            }
+
+            RailWay = new Way();
+            RailWay = wayData;
+            //updateModel();
             initialSetupControls(this);
+
         }
 
         private void initialSetupControls(Control control)
@@ -131,7 +190,6 @@ namespace locatorconfig
             switch (currentType)
             {
                 case RailCircuitType.Digital:
-
                     var digitalCircuit = new DigitalRailCircuit();
                     uc = new DigitalRailCircuitUserControl(digitalCircuit.pinNumber, digitalCircuit.portNumber);
                     break;
@@ -165,7 +223,7 @@ namespace locatorconfig
         private void updateModel()
         {
             System.Console.WriteLine("Model updated");
-            RailWay.direction = cbxDirection.SelectedIndex + 1;
+            RailWay.direction = this.cbxDirection.SelectedIndex + 1;
             RailWay.delayLR = Convert.ToDouble(((this.tbxDelayLR.Text == "") || (this.tbxDelayLR.Text == "-")) ? "0" : this.tbxDelayLR.Text);
             RailWay.delayRL = Convert.ToDouble(((this.tbxDelayRL.Text == "") || (this.tbxDelayRL.Text == "-")) ? "0" : this.tbxDelayRL.Text);
             RailWay.maxSpeedLR = Convert.ToDouble(((this.tbxMaxSpeedLR.Text == "") || (this.tbxMaxSpeedLR.Text == "-")) ? "0" : this.tbxMaxSpeedLR.Text);
@@ -242,6 +300,5 @@ namespace locatorconfig
             this.wayConfigImagePanel.BackgroundImageLayout = ImageLayout.Zoom;
             System.Console.WriteLine("Rail circuit configuration changed to " + config.GetType().ToString());
         }
-
     }
 }
